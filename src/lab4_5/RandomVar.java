@@ -138,8 +138,8 @@ public class RandomVar {
     public void displayBarChart() {
         AWTBarChart chart = new AWTBarChart(
                 "Probability Mass Function",
-                "Probability Mass Function of Random Variables",
-                "Probability", "Random Variables", "PMF",
+                "Probability Mass Function of " + this.X_name,
+                this.X_name, "Probability", "PMF",
                 this.X_value, this.prob
         );
         chart.pack();
@@ -153,8 +153,8 @@ public class RandomVar {
     public void displayLineChart() {
         AWTLineChart chart = new AWTLineChart(
                 "Probability Mass Function",
-                "Probability Mass Function of Random Variables",
-                "Probability", "Random Variables", "PMF",
+                "Probability Mass Function of " + this.X_name,
+                this.X_name, "Probability", "PMF",
                 this.X_value, this.prob
         );
         chart.pack();

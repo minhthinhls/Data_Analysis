@@ -31,6 +31,8 @@ public class AWTChart extends ApplicationFrame {
                     System.out.println(e);
                     return null; // If ERROR -> Return null
                 }
+            } else {
+                throw new IllegalArgumentException("Keys & Probs should be String & Double");
             }
         }
         return dataset;

@@ -28,7 +28,7 @@ public class AWTBarChart extends AWTChart {
                 true, true, false);
 
         ChartPanel chartPanel = new ChartPanel(barChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
+        chartPanel.setPreferredSize(new java.awt.Dimension(800, 500));
         this.setContentPane(chartPanel);
     }
 

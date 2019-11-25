@@ -28,7 +28,7 @@ public class AWTLineChart extends AWTChart {
                 true, true, false);
 
         ChartPanel chartPanel = new ChartPanel(lineChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
+        chartPanel.setPreferredSize(new java.awt.Dimension(800, 500));
         this.setContentPane(chartPanel);
     }
 
