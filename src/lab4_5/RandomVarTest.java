@@ -25,22 +25,23 @@ public class RandomVarTest {
 
     public static void main(String[] args) {
         String X_name = "MPG";
-        ArrayList allValue = getXValue("dataset/AutoSurvey.csv", X_name);
+        ArrayList<String> allValue = getXValue("dataset/AutoSurvey.csv", X_name);
         RandomVar randomVar = new RandomVar(X_name, allValue.toArray());
 
         System.out.println(randomVar.getXValue());
         System.out.println(randomVar.getProb());
         randomVar.displayLineChart();
+        randomVar.displayBarChart();
     }
 
-    private static ArrayList getXValue(String fileName, String X_name) {
+    private static ArrayList<String> getXValue(String fileName, String X_name) {
         JSONArray jsonObjects = null;
         try {
             jsonObjects = CSVToJSON(fileName, X_name);
         } catch (IOException e) {
             System.out.println(e);
         }
-        ArrayList values = new ArrayList();
+        ArrayList<String> values = new ArrayList();
         for (Object object : jsonObjects) {
             if (object instanceof JSONObject) {
                 JSONObject item = (JSONObject) object;

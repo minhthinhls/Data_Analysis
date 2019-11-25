@@ -7,6 +7,8 @@ package lab4_5;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Pattern;
+import org.jfree.ui.RefineryUtilities;
 
 /**
  *
@@ -20,13 +22,20 @@ public class RandomVar {
     private double Mean;
     private double Variance;
     private double StdDev;
+    private static final Pattern PATTERN = Pattern.compile("-?\\d+(\\.\\d+)?");
+
+    public boolean isNumeric(String stringNumber) {
+        if (stringNumber == null) {
+            return false;
+        }
+        return PATTERN.matcher(stringNumber).matches();
+    }
 
     public RandomVar(String x_name, Object[] values) {
         X_name = x_name;
         X_value = new ArrayList<>();
         prob = new ArrayList<>();
-        Arrays.sort(values);
-        assignX_Prob(values);
+        this.assignX_Prob(values);
     }
 
     public ArrayList getXValue() {
@@ -44,8 +53,10 @@ public class RandomVar {
      * @param values : input values
      */
     public void assignX_Prob(Object[] values) {
+        Arrays.sort(values); // The array must be sorted before counting appeared-frequency
         int count = 0;
-        for (int i = 0; i < values.length; i++) {
+        int arrSize = values.length;
+        for (int i = 0; i < arrSize; i++) {
             if (X_value.contains(values[i])) {
                 count++;
             } else {
@@ -53,16 +64,16 @@ public class RandomVar {
                     count = 1;
                     X_value.add(values[i]);
                 }
-                if (i != 0 && i != values.length - 1) {
-                    double d_prob = ((double) count) / values.length;
+                if (i != 0 && i != arrSize - 1) {
+                    double d_prob = ((double) count) / arrSize;
                     prob.add(d_prob);
                     count = 1;
                     X_value.add(values[i]);
                 }
             }
 
-            if (i == values.length - 1) {
-                double d_prob = ((double) count) / values.length;
+            if (i == arrSize - 1) {
+                double d_prob = ((double) count) / arrSize;
                 prob.add(d_prob);
             }
         }
@@ -75,9 +86,18 @@ public class RandomVar {
      */
     public double computeMean() {
         double mean = 0;
-        // TODO: Check if X is numeric
-        Mean = mean;
-        return mean;
+        for (Object obj : X_value) {
+            if (obj instanceof String) {
+                try { // TODO: Check if X is numeric
+                    double number = Double.parseDouble((String) obj);
+                    mean += number;
+                } catch (NumberFormatException e) {
+                    return 0; // If any instances is not Numerical -> Return 0
+                }
+            }
+        }
+        mean /= X_value.size();
+        return Mean = mean;
     }
 
     /**
@@ -87,9 +107,19 @@ public class RandomVar {
      */
     public double computeVar() {
         double var = 0;
-        // TODO: Check if X is numeric
-        Variance = var;
-        return var;
+        double mean = this.computeMean();
+        for (Object obj : X_value) {
+            if (obj instanceof String) {
+                try { // TODO: Check if X is numeric
+                    double number = Double.parseDouble((String) obj);
+                    var += Math.pow(number - mean, 2);
+                } catch (NumberFormatException e) {
+                    return 0; // If any instances is not Numerical -> Return 0
+                }
+            }
+        }
+        var /= X_value.size() - 1;
+        return Variance = var;
     }
 
     /**
@@ -98,24 +128,38 @@ public class RandomVar {
      * @return StdDev : double
      */
     public double computeStdDev() {
-        double STD = 0;
-        // TODO: Check if X is numeric
-        StdDev = STD;
-        return STD;
+        double std = Math.sqrt(this.computeVar());
+        return StdDev = std;
     }
 
     /**
      * Display the bar chart of the probability mass function
      */
     public void displayBarChart() {
-        // TODO
+        AWTBarChart chart = new AWTBarChart(
+                "Probability Mass Function",
+                "Probability Mass Function of Random Variables",
+                "Probability", "Random Variables", "PMF",
+                this.X_value, this.prob
+        );
+        chart.pack();
+        RefineryUtilities.centerFrameOnScreen(chart);
+        chart.setVisible(true);
     }
 
     /**
      * Display the line chart of the probability mass function
      */
     public void displayLineChart() {
-        // TODO
+        AWTLineChart chart = new AWTLineChart(
+                "Probability Mass Function",
+                "Probability Mass Function of Random Variables",
+                "Probability", "Random Variables", "PMF",
+                this.X_value, this.prob
+        );
+        chart.pack();
+        RefineryUtilities.centerFrameOnScreen(chart);
+        chart.setVisible(true);
     }
 
 }
