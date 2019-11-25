@@ -19,7 +19,7 @@ import org.json.simple.JSONObject;
 
 /**
  *
- * @author Minh Thinh
+ * @author Student
  */
 public class RandomVarTest {
 
